@@ -33,19 +33,28 @@ class MainActivity : AppCompatActivity() {
         //Splash screen waiting by creating delay in thread
         splashScreen.apply {
             setKeepOnScreenCondition {
+                //Returns false after some time delay(Initially returns true)
                 splashViewModel.getIsWaiting()
             }
         }
 
         //SearchView Listener
         searchWordSv.setOnQueryTextListener(object: SearchView.OnQueryTextListener {
+            //Execute when word will be searched
             override fun onQueryTextSubmit(query: String?): Boolean {
-                if (query != null) {
-                    getMeaning(query)
+                if(query != null) {
+                    if (query.isNotEmpty()) {
+                        getMeaning(query)
+                    } else {
+                        Toast.makeText(this@MainActivity, "Searched word can't be empty", Toast.LENGTH_SHORT).show()
+                    }
+                } else {
+                    Toast.makeText(this@MainActivity, "Something went wrong!", Toast.LENGTH_SHORT).show()
                 }
                 return true;
             }
 
+            //No need to implement this method for this project
             override fun onQueryTextChange(newText: String?): Boolean {
                 //Nothing to do here
                 return true;
@@ -56,10 +65,8 @@ class MainActivity : AppCompatActivity() {
     //Fetching word meaning using Retrofit API
     private fun getMeaning(word: String) {
         RetrofitInstance.getApiInterfaceInstance().getWordMeaning(word).enqueue(object : Callback<List<ApiResponseClass>> {
-            override fun onResponse(
-                call: Call<List<ApiResponseClass>>,
-                response: Response<List<ApiResponseClass>>
-            ) {
+            //Callback after fetching JSON response from API and parsing to Model class
+            override fun onResponse(call: Call<List<ApiResponseClass>>, response: Response<List<ApiResponseClass>>) {
                 if(response.isSuccessful) {
                     Toast.makeText(this@MainActivity, response.body()?.get(0)?.getMeanings()?.get(0)?.getDefinitions()?.get(0)?.getDefinition(), Toast.LENGTH_SHORT).show()
                 } else {
@@ -67,6 +74,7 @@ class MainActivity : AppCompatActivity() {
                 }
             }
 
+            //Callback after fetching failure
             override fun onFailure(call: Call<List<ApiResponseClass>>, t: Throwable) {
                 t.printStackTrace()
                 Toast.makeText(this@MainActivity, t.localizedMessage, Toast.LENGTH_SHORT).show()

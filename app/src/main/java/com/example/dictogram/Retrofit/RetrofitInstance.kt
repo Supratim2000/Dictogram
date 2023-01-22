@@ -5,6 +5,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitInstance {
+    //Retrofit instance
     private val retrofit: Retrofit by lazy {
         Retrofit.Builder()
             .baseUrl(Constants.baseUrl)
@@ -16,5 +17,6 @@ object RetrofitInstance {
         retrofit.create(ApiService::class.java)
     }
 
+    //Getter
     public fun getApiInterfaceInstance(): ApiService = this.apiInterface
 }
