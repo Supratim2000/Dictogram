@@ -33,12 +33,16 @@ class PhoneticsAdapter(
         val currentItemText: String = currentItem.getText()
         val currentItemAudio: String = currentItem.getAudio()
 
+        //Exception handling cause text or audio field can be null
         try {
+            //Checking if text field is not empty, if empty then we will not show it in RecyclerView
             if(currentItemText.isNotEmpty()) {
                 holder.getPhoneticsRowTv().text = currentItemText
                 holder.getPhoneticsRowTv().visibility = View.VISIBLE
+                //Checking if audio field is not empty, if empty then we will not show play button on CardView
                 if (currentItemAudio.isNotEmpty()) {
                     holder.getPhoneticsRowPlayIv().visibility = View.VISIBLE
+                    //Play phonetics when play button pressed on CardView
                     holder.getPhoneticsRowPlayIv().setOnClickListener(object : View.OnClickListener {
                         override fun onClick(p0: View?) {
                             try {
@@ -65,6 +69,8 @@ class PhoneticsAdapter(
         }
     }
 
+    override fun getItemCount(): Int = phoneticsList.size
+
     private fun playSound(currentItemAudio: String, audioStreamType: Int) {
         val mediaPlayer: MediaPlayer = MediaPlayer()
         mediaPlayer.setAudioStreamType(audioStreamType)
@@ -72,6 +78,4 @@ class PhoneticsAdapter(
         mediaPlayer.prepare()
         mediaPlayer.start()
     }
-
-    override fun getItemCount(): Int = phoneticsList.size
 }

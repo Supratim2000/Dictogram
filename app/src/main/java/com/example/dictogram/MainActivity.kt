@@ -101,7 +101,7 @@ class MainActivity : AppCompatActivity() {
                         }
                     }
                 } else {
-                    Toast.makeText(this@MainActivity, "Something went wrong!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@MainActivity, "Meaning not found!", Toast.LENGTH_SHORT).show()
                 }
             }
 
