@@ -89,12 +89,13 @@ class MainActivity : AppCompatActivity() {
                     //Toast.makeText(this@MainActivity, response.body()?.get(0)?.getMeanings()?.get(0)?.getDefinitions()?.get(0)?.getDefinition(), Toast.LENGTH_SHORT).show()
                     if(response.body() != null) {
                         val listOfPhonetic: List<Phonetics>? = response.body()?.get(0)?.getPhonetics()
+                        //Toast.makeText(this@MainActivity, "Size: ${listOfPhonetic?.size}", Toast.LENGTH_SHORT).show()
                         if(listOfPhonetic != null) {
+                            phoneticsFetchedList.clear()
                             for(phoneticItem in listOfPhonetic) {
-                                phoneticsFetchedList.clear()
                                 phoneticsFetchedList.add(phoneticItem)
-                                phoneticsAdapter.notifyDataSetChanged()
                             }
+                            phoneticsAdapter.notifyDataSetChanged()
                         } else {
                             Toast.makeText(this@MainActivity, "Something went wrong!", Toast.LENGTH_SHORT).show()
                         }

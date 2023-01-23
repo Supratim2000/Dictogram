@@ -47,7 +47,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/phonetics_rv"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="150dp"/>
 
             <TextView
                 android:layout_width="match_parent"
@@ -60,7 +60,7 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="250dp"/>
             
         </LinearLayout>
 
